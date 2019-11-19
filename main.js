@@ -107,13 +107,13 @@ Apify.main(async () => {
 
     if (result.pick3['mid']) {
         console.log(">> PIC3[mid]: " + JSON.stringify(result.pick3['mid']));
-        console.log(">> PIC3 dateCOMPARE: " + result.pick3['mid'].date.format("YMD"));
+        console.log(">> PIC3 dateCOMPARE: " + result.pick3['mid'].date.tz(tz).format("YMD"));
         console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
     }
 
 
     if (result.pick3['mid'] && result.pick4['mid']
-        && result.pick3['mid'].date.format("YMD") == now.format("YMD")) {
+        && result.pick3['mid'].date.tz(tz).format("YMD") == now.format("YMD")) {
         console.log("*************AKI*************");
         const midHtml = [];
         var m1 = '' + result.pick3['mid'].digits[0] + result.pick3['mid'].digits[1] + result.pick3['mid'].digits[2],
@@ -142,7 +142,7 @@ Apify.main(async () => {
     }
 
     if (result.pick3['eve'] && result.pick4['eve'] &&
-        result.pick3['eve'].date.format("YMD") == now.format("YMD")) {
+        result.pick3['eve'].date.tz(tz).format("YMD") == now.format("YMD")) {
         const evHtml = [];
         var e1 = '' + result.pick3['eve'].digits[0] + result.pick3['eve'].digits[1] + result.pick3['eve'].digits[2],
             e2 = '' + result.pick4['eve'].digits[0] + result.pick4['eve'].digits[1],

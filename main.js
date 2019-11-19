@@ -18,12 +18,19 @@ Apify.main(async () => {
     // if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
     const input = await Apify.getValue('INPUT');
     console.log("INPUT:" + JSON.stringify(input));
-    const offset = input && input.offset ? input.offset : -4; //diferencia horaria contra el servidor de apify respecto a la hora de cuba
-    console.log("OFFSET:" +offset);
+    const offset = input && input.offset ? input.offset : -5; //diferencia horaria contra el servidor de apify respecto a la hora de cuba
+    const tz = input && input.timeZoneName ? input.timeZoneName : "America/Havana";
+
+
+    const now = moment() .tz(tz);
+    console.log(">> NOW: " + now.format());
     const baseUrl = 'http://www.flalottery.com/';
 
     const requestList = new Apify.RequestList({
-        sources: [{url: baseUrl + 'pick3'}, {url: baseUrl + 'pick4'}],
+        sources: [
+            {url: baseUrl + 'pick3'},
+            {url: baseUrl + 'pick4'}
+        ],
     });
     await requestList.initialize();
     const result = {
@@ -55,13 +62,8 @@ Apify.main(async () => {
         "Mucha agua y Casa Vieja", "Viejo", "Alpargata y Comunista", "Puerco grande, Avión y Globo", "Sortija",
         "Machete Y Habana", "Guerra", "Zapato y Puta Vieja", "Mosquito y Grillo", "Piano", "Serrucho, Gallo, Carbonero",
         "Inodoro y Automóvil"];
-
-    const esMonth = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-        "Octubre", "Noviembre", "Diciembre"];
     const sigs = [];
-    const tz = "America/Havana",
-        now = moment().utcOffset(offset).tz(tz);
-    console.log("****************" + now.format());
+
     const crawler = new Apify.CheerioCrawler({
         requestList,
         handlePageFunction: async ({request, response, html, $}) => {
@@ -92,7 +94,6 @@ Apify.main(async () => {
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log(">> NOW: " + result.pick3[0].date.format("Y-M-D HH:m"));
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 

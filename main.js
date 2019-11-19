@@ -176,7 +176,7 @@ Apify.main(async () => {
     sigs.sort().forEach(function (i) {
         if (i > 0) {
             result.sigs.push(' - ' + i + ' : ' + charada[i - 1]);
-            result.sigsHashTags.push("#CHARADA_" + i + "_" + charada[i - 1].replace(/,/gi, "").replace(/\s/gi, "_").toUpperCase())
+            result.sigsHashTags.push("#Charada" + i + "" + charada[i - 1].replace(/,/gi, "").replace(/\s/gi, ""))
         }
     });
 

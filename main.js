@@ -17,7 +17,9 @@ Apify.main(async () => {
     // const input = await Apify.getInput();
     // if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
     const input = await Apify.getValue('INPUT');
+    console.log("INPUT:" + JSON.stringify(input));
     const offset = input && input.offset ? input.offset : -4; //diferencia horaria contra el servidor de apify respecto a la hora de cuba
+    console.log("OFFSET:" +offset);
     const baseUrl = 'http://www.flalottery.com/';
 
     const requestList = new Apify.RequestList({

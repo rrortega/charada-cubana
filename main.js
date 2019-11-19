@@ -59,7 +59,7 @@ Apify.main(async () => {
     const tz = "America/Havana",
         offset = -4, //diferencia horaria contra el servidor de apify respecto a la hora de cuba
         now = moment().utcOffset(offset).tz(tz);
-    // console.log("****************"+now.format());return;
+    console.log("****************"+now.format());
     const crawler = new Apify.CheerioCrawler({
         requestList,
         handlePageFunction: async ({request, response, html, $}) => {

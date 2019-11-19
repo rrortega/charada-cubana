@@ -119,7 +119,6 @@ Apify.main(async () => {
 
     if (result.pick3['mid'] && result.pick4['mid']
         && result.pick3['mid'].date.tz(tz).format("YMD") == now.format("YMD")) {
-        console.log("*************AKI*************");
         const midHtml = [];
         var m1 = '' + result.pick3['mid'].digits[0] + result.pick3['mid'].digits[1] + result.pick3['mid'].digits[2],
             m2 = '' + result.pick4['mid'].digits[0] + result.pick4['mid'].digits[1],
@@ -177,7 +176,7 @@ Apify.main(async () => {
     sigs.sort().forEach(function (i) {
         if (i > 0) {
             result.sigs.push(' - ' + i + ' : ' + charada[i - 1]);
-            result.sigsHashTags.push("#CHARADA-" + i + "-" + charada[i - 1].replace(/,/gi, "").replace(/\s/gi, "-").toUpperCase())
+            result.sigsHashTags.push("#CHARADA_" + i + "_" + charada[i - 1].replace(/,/gi, "").replace(/\s/gi, "_").toUpperCase())
         }
     });
 
@@ -189,5 +188,6 @@ Apify.main(async () => {
         console.log("****** " + result.midBody + " ******");
     if ("" != result.eveBody)
         console.log("****** " + result.eveBody + " ******");
-    console.log('Done.');
+
+    console.log('Done!!!!!!!!!');
 });

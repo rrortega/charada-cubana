@@ -104,11 +104,15 @@ Apify.main(async () => {
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 
-
+    console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
     if (result.pick3['mid']) {
-        console.log(">> PIC3[mid]: " + JSON.stringify(result.pick3['mid']));
-        console.log(">> PIC3 dateCOMPARE: " + result.pick3['mid'].date.tz(tz).format("YMD"));
-        console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
+        console.log(">> PICK3[mid]: " + JSON.stringify(result.pick3['mid']));
+        console.log(">> PICK3 dateCOMPARE: " + result.pick3['mid'].date.tz(tz).format("YMD"));
+    }
+    if (result.pick4['mid']) {
+        console.log(">> PICK4[mid]: " + JSON.stringify(result.pick4['mid']));
+        console.log(">> PICK4 dateCOMPARE: " + result.pick4['mid'].date.tz(tz).format("YMD"));
+
     }
 
 

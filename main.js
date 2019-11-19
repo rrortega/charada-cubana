@@ -99,6 +99,7 @@ Apify.main(async () => {
 
 
     if (result.pick3.length > 1 && result.pick3[0].date.format("YMD") == now.format("YMD")) {
+        console.log("*************AKI*************");
         const midHtml = [];
         var m1 = '' + result.pick3[0].digits[0] + result.pick3[0].digits[1] + result.pick3[0].digits[2],
             m2 = '' + result.pick4[0].digits[0] + result.pick4[0].digits[1],

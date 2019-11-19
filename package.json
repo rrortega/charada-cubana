@@ -1,0 +1,24 @@
+{
+  "name": "actor-charada-cubana",
+  "version": "0.0.1",
+  "description": "Actor de apify.com que obtiene resultados de la charada cubana",
+  "main": "main.js",
+  "dependencies": {
+    "apify": "^0.14.10",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0"
+  },
+  "scripts": {
+    "start": "node ./main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rrortega/charada-cubana.git"
+  },
+  "author": "ROLANDO RODRIGUEZ",
+  "license": "ISC"
+}

@@ -104,20 +104,20 @@ Apify.main(async () => {
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 
-    console.log(">> NOW dateCOMPRARE: " + now.format("YMD HH"));
+    console.log(">> NOW dateCOMPRARE: " + now.format().split("T")[0] );
     if (result.pick3['mid']) {
         console.log(">> PICK3[mid]: " + JSON.stringify(result.pick3['mid']));
-        console.log(">> PICK3 dateCOMPARE: " + result.pick3['mid'].date.format("YMD HH"));
+        console.log(">> PICK3 dateCOMPARE: " + result.pick3['mid'].date.format().split("T")[0]);
     }
     if (result.pick4['mid']) {
         console.log(">> PICK4[mid]: " + JSON.stringify(result.pick4['mid']));
-        console.log(">> PICK4 dateCOMPARE: " + result.pick4['mid'].date.format("YMD HH"));
+        console.log(">> PICK4 dateCOMPARE: " + result.pick4['mid'].date.format().split("T")[0]);
 
     }
 
 
     if (result.pick3['mid'] && result.pick4['mid']
-        && result.pick3['mid'].date.tz(tz).format("YMD") == now.format("YMD")) {
+        && result.pick3['mid'].date.tz(tz).format().split("T")[0] == now.format().split("T")[0]) {
         console.log("*************AKI*************");
         const midHtml = [];
         var m1 = '' + result.pick3['mid'].digits[0] + result.pick3['mid'].digits[1] + result.pick3['mid'].digits[2],

@@ -98,6 +98,12 @@ Apify.main(async () => {
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 
 
+    console.log(">> PIC3 length: " + result.pick3.length);
+    console.log(">> PIC3 dateCOMPARE: " + result.pick3[0].date.format("YMD"));
+    console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
+
+
+
     if (result.pick3.length > 1 && result.pick3[0].date.format("YMD") == now.format("YMD")) {
         console.log("*************AKI*************");
         const midHtml = [];

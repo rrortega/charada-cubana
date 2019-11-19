@@ -21,7 +21,7 @@ Apify.main(async () => {
     const tz = input && input.timeZoneName ? input.timeZoneName : "America/Havana";
 
 
-    const now = moment().tz(tz);
+    const now = moment().tz(tz).subtract('day',1);
     console.log(">> NOW: " + now.format());
     const baseUrl = 'http://www.flalottery.com/';
 
@@ -118,7 +118,7 @@ Apify.main(async () => {
 
 
     if (result.pick3['mid'] && result.pick4['mid']
-        && result.pick3['mid'].date.tz(tz).format().split("T")[0] == now.format().split("T")[0]) {
+        && result.pick3['mid'].date.tz(tz).format("YMD")  == now.format("YMD") ) {
         console.log("*************AKI*************");
         const midHtml = [];
         var m1 = '' + result.pick3['mid'].digits[0] + result.pick3['mid'].digits[1] + result.pick3['mid'].digits[2],
@@ -147,7 +147,7 @@ Apify.main(async () => {
     }
 
     if (result.pick3['eve'] && result.pick4['eve'] &&
-        result.pick3['eve'].date.tz(tz).format("YMD") == now.format("YMD")) {
+        result.pick3['eve'].date.tz(tz).format("YMD") == now.format("YMD") ) {
         const evHtml = [];
         var e1 = '' + result.pick3['eve'].digits[0] + result.pick3['eve'].digits[1] + result.pick3['eve'].digits[2],
             e2 = '' + result.pick4['eve'].digits[0] + result.pick4['eve'].digits[1],
@@ -171,7 +171,7 @@ Apify.main(async () => {
             sigs.push(parseInt(e3));
 
 
-        result.eveBody = eveBody.length > 0 ? eveBody.join("<br>") : ''
+        result.eveBody = evHtml.length > 0 ? evHtml.join("<br>") : ''
 
     }
     sigs.sort().forEach(function (i) {

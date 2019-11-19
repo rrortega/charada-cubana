@@ -9,7 +9,6 @@ const timezone = require('moment-timezone');
 moment.locale('es');
 Apify.main(async () => {
 
-
     // Get input of the actor (here only for demonstration purposes).
     // If you'd like to have your input checked and have Apify display
     // a user interface for it, add INPUT_SCHEMA.json file to your actor.
@@ -77,8 +76,10 @@ Apify.main(async () => {
                     var scope = $(this),
                         rs = {
                             digits: [],
-                            date: moment(new Date($($('.regWeight', scope).siblings('p')[1]).text())).utcOffset(offset)
+                            date: moment($($('.regWeight', scope).siblings('p')[1]).text() + " 11:00 AM", "LLLL", "en").utcOffset(offset)
+                            // date: moment( $($('.regWeight', scope).siblings('p')[1]).text() ).utcOffset(offset)
                         };
+
                     $('.gamePageBalls .balls', scope).each(function () {
                         rs.digits.push($(this).text());
                     });
@@ -104,7 +105,7 @@ Apify.main(async () => {
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 
-    console.log(">> NOW dateCOMPRARE: " + now.format().split("T")[0] );
+    console.log(">> NOW dateCOMPRARE: " + now.format().split("T")[0]);
     if (result.pick3['mid']) {
         console.log(">> PICK3[mid]: " + JSON.stringify(result.pick3['mid']));
         console.log(">> PICK3 dateCOMPARE: " + result.pick3['mid'].date.format().split("T")[0]);

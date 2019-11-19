@@ -71,18 +71,12 @@ Apify.main(async () => {
                     var scope = $(this),
                         rs = {
                             digits: [],
-                            date: moment($($('.regWeight', scope).siblings('p')[1]).text()).tz(tz)
+                            date: moment(new Date($($('.regWeight', scope).siblings('p')[1]).text())).tz(tz)
                         };
                     $('.gamePageBalls .balls', scope).each(function () {
                         rs.digits.push($(this).text());
                     });
                     result[game].push(rs);
-
-
-                    console.log(">>>>" + rs.date.format("dddd LL"));
-
-                    console.log('>> NOW: ', now.format("dddd LL"));
-
 
                 });
             }
@@ -97,8 +91,7 @@ Apify.main(async () => {
 
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
-    console.log(">> PIC3DATE: " + result.pick3[0].date.format("Y-M-D -> HH:m"));
-    console.log(">> NOWDATE: " + now.format("Y-M-D -> HH:m"));
+
 
     if (result.pick3.length > 1 && result.pick3[0].date.format("YMD") == now.format("YMD")) {
         const midHtml = [];
@@ -164,5 +157,10 @@ Apify.main(async () => {
     await Apify.setValue('OUTPUT', {
         result,
     });
+
+    if ("" != result.midBody)
+        console.log("****** " + result.midBody + " ******");
+    if ("" != result.eveBody)
+        console.log("****** " + result.eveBody + " ******");
     console.log('Done.');
 });

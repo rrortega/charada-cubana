@@ -22,7 +22,7 @@ Apify.main(async () => {
     const tz = input && input.timeZoneName ? input.timeZoneName : "America/Havana";
 
 
-    const now = moment() .tz(tz);
+    const now = moment().tz(tz);
     console.log(">> NOW: " + now.format());
     const baseUrl = 'http://www.flalottery.com/';
 
@@ -34,8 +34,8 @@ Apify.main(async () => {
     });
     await requestList.initialize();
     const result = {
-        pick3: [],
-        pick4: [],
+        pick3: {},
+        pick4: {},
         dateString: "",
         midWin: "",
         midBody: "",
@@ -82,7 +82,14 @@ Apify.main(async () => {
                     $('.gamePageBalls .balls', scope).each(function () {
                         rs.digits.push($(this).text());
                     });
-                    result[game].push(rs);
+
+                    // result[game].push(rs);
+
+                    if (!result[game]['mid'])
+                        result[game]['mid'] = rs;
+                    else
+                        result[game]['eve'] = rs;
+
 
                 });
             }
@@ -98,18 +105,20 @@ Apify.main(async () => {
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 
 
-    console.log(">> PIC3 length: " + result.pick3.length);
-    console.log(">> PIC3 dateCOMPARE: " + result.pick3[0].date.format("YMD"));
-    console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
+    if (result.pick3['mid']) {
+        console.log(">> PIC3[mid]: " + JSON.stringify(result.pick3['mid']));
+        console.log(">> PIC3 dateCOMPARE: " + result.pick3['mid'].date.format("YMD"));
+        console.log(">> NOW dateCOMPRARE: " + now.format("YMD"));
+    }
 
 
-
-    if (result.pick3.length > 1 && result.pick3[0].date.format("YMD") == now.format("YMD")) {
+    if (result.pick3['mid'] && result.pick4['mid']
+        && result.pick3['mid'].date.format("YMD") == now.format("YMD")) {
         console.log("*************AKI*************");
         const midHtml = [];
-        var m1 = '' + result.pick3[0].digits[0] + result.pick3[0].digits[1] + result.pick3[0].digits[2],
-            m2 = '' + result.pick4[0].digits[0] + result.pick4[0].digits[1],
-            m3 = '' + result.pick4[0].digits[2] + result.pick4[0].digits[3];
+        var m1 = '' + result.pick3['mid'].digits[0] + result.pick3['mid'].digits[1] + result.pick3['mid'].digits[2],
+            m2 = '' + result.pick4['mid'].digits[0] + result.pick4['mid'].digits[1],
+            m3 = '' + result.pick4['mid'].digits[2] + result.pick4['mid'].digits[3];
 
         result.dateString = now.format("dddd LL");
 
@@ -132,11 +141,12 @@ Apify.main(async () => {
         result.midBody = midHtml.length > 0 ? midHtml.join("<br>") : ''
     }
 
-    if (result.pick4.length > 1 && result.pick3[1].date.format("YMD") == now.format("YMD")) {
+    if (result.pick3['eve'] && result.pick4['eve'] &&
+        result.pick3['eve'].date.format("YMD") == now.format("YMD")) {
         const evHtml = [];
-        var e1 = '' + result.pick3[1].digits[0] + result.pick3[1].digits[1] + result.pick3[1].digits[2],
-            e2 = '' + result.pick4[1].digits[0] + result.pick4[1].digits[1],
-            e3 = '' + result.pick4[1].digits[2] + result.pick4[1].digits[3];
+        var e1 = '' + result.pick3['eve'].digits[0] + result.pick3['eve'].digits[1] + result.pick3['eve'].digits[2],
+            e2 = '' + result.pick4['eve'].digits[0] + result.pick4['eve'].digits[1],
+            e3 = '' + result.pick4['eve'].digits[2] + result.pick4['eve'].digits[3];
         evHtml.push('🌜 GANADOR DE LA NOCHE:  ' + e1 + '-' + e2 + '-' + e3);
         result.eveWin = e1 + '-' + e2 + '-' + e3;
 

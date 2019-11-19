@@ -16,7 +16,8 @@ Apify.main(async () => {
     // For more information, see https://apify.com/docs/actor/input-schema
     // const input = await Apify.getInput();
     // if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
-
+    const input = await Apify.getValue('INPUT');
+    const offset = input && input.offset ? input.offset : -4; //diferencia horaria contra el servidor de apify respecto a la hora de cuba
     const baseUrl = 'http://www.flalottery.com/';
 
     const requestList = new Apify.RequestList({
@@ -57,9 +58,8 @@ Apify.main(async () => {
         "Octubre", "Noviembre", "Diciembre"];
     const sigs = [];
     const tz = "America/Havana",
-        offset = -4, //diferencia horaria contra el servidor de apify respecto a la hora de cuba
         now = moment().utcOffset(offset).tz(tz);
-    console.log("****************"+now.format());
+    console.log("****************" + now.format());
     const crawler = new Apify.CheerioCrawler({
         requestList,
         handlePageFunction: async ({request, response, html, $}) => {
@@ -90,7 +90,7 @@ Apify.main(async () => {
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-
+    console.log(">> NOW: " + result.pick3[0].date.format("Y-M-D HH:m"));
     console.log(">> PICK3: " + JSON.stringify(result.pick3));
     console.log(">> PICK4: " + JSON.stringify(result.pick4));
 

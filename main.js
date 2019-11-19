@@ -57,7 +57,9 @@ Apify.main(async () => {
         "Octubre", "Noviembre", "Diciembre"];
     const sigs = [];
     const tz = "America/Havana",
-        now = moment().tz(tz);
+        offset = -4, //diferencia horaria contra el servidor de apify respecto a la hora de cuba
+        now = moment().utcOffset(offset).tz(tz);
+    // console.log("****************"+now.format());return;
     const crawler = new Apify.CheerioCrawler({
         requestList,
         handlePageFunction: async ({request, response, html, $}) => {

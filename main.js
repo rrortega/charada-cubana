@@ -34,6 +34,7 @@ Apify.main(async () => {
     await requestList.initialize();
     const result = {
         tried: input && input.tried ? input.tried : 0,
+        momentDay: parseInt(now.format('H')) < 20 ? 'mid' : 'ev',
         pick3: {},
         pick4: {},
         dateString: "",

@@ -23,7 +23,7 @@ Apify.main(async () => {
 
     const now = moment().tz(tz);
     console.log(">> NOW: " + now.format());
-    const baseUrl = 'http://www.flalottery.com/';
+    const baseUrl = 'https://www.flalottery.com/';
 
     const requestList = new Apify.RequestList({
         sources: [
